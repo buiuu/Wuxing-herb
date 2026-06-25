@@ -87,14 +87,14 @@ body {
   #main {
     order: 1;
     width: 100%;
-    min-height: 360px;
+    min-height: 420px;
     margin-top: 0;
     overflow: hidden;
     position: relative;
   }
   #main-title {
     position: static; top: auto; left: auto; transform: none;
-    order: 0; width: 100%; text-align: center; padding: 8px 0;
+    order: 0; width: 100%; text-align: center; padding: 16px 0 12px;
   }
   #main-title h1 {
     font-size: 24px;
@@ -157,7 +157,7 @@ body {
     border-top: 3px solid var(--redwood);
     max-height: none;
     overflow-y: visible;
-    margin-top: 32px;
+    margin-top: 48px;
   }
   #detail-body {
     overflow-y: visible;
@@ -219,8 +219,8 @@ body {
   }
 
   /* 药球缩小后字体适配 */
-  .herb-ball { font-size: 8px; }
-  .herb-ball:hover { font-size: 10px !important; }
+  .herb-ball { font-size: 7px; }
+  .herb-ball:hover { font-size: 9px !important; }
 }
 
 /* ===== 中式装饰：页面外边框（红木色） ===== */
@@ -1316,7 +1316,7 @@ function layoutAll() {
   const isMobile = window.innerWidth < 768;
   const size = Math.min(mainRect.width, mainRect.height);
   const cx = size / 2;
-  const cy = isMobile ? mainRect.height * 0.6 : size / 2;
+  const cy = isMobile ? mainRect.height * 0.78 : size / 2;
   if (centerNode) {
     centerNode.style.left = (cx - TAO_SIZE/2)+'px';
     centerNode.style.top = (cy - TAO_SIZE/2)+'px';
@@ -1589,8 +1589,8 @@ function adjustMobileLayout() {
     const scale = window.innerWidth / 950;
     WX_RADIUS = Math.round(220 * scale);
     HERB_ORBIT = Math.round(150 * scale);
-    WX_NODE_SIZE = Math.max(Math.round(76 * scale), 42);
-    HERB_SIZE = Math.max(Math.round(44 * scale), 18);
+    WX_NODE_SIZE = Math.max(Math.round(56 * scale), 42);
+    HERB_SIZE = Math.max(Math.round(26 * scale), 18);
     TAO_SIZE = Math.round(200 * scale);
   } else {
     WX_RADIUS = 220;
