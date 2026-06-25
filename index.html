@@ -157,7 +157,7 @@ body {
     border-top: 3px solid var(--redwood);
     max-height: none;
     overflow-y: visible;
-    margin-top: 60px;
+    margin-top: 80px;
   }
   #detail-body {
     overflow-y: visible;
@@ -1316,7 +1316,7 @@ function layoutAll() {
   const isMobile = window.innerWidth < 768;
   const size = Math.min(mainRect.width, mainRect.height);
   const cx = size / 2;
-  const cy = isMobile ? mainRect.height * 0.78 : size / 2;
+  const cy = isMobile ? mainRect.height * 0.65 : size / 2;
   if (centerNode) {
     centerNode.style.left = (cx - TAO_SIZE/2)+'px';
     centerNode.style.top = (cy - TAO_SIZE/2)+'px';
