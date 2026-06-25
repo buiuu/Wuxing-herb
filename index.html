@@ -87,11 +87,14 @@ body {
   #main {
     order: 1;
     width: 100%;
-    min-width: 0;
-    min-height: 320px;
-    flex: none;
-    overflow: visible;
+    min-height: 360px;
+    margin-top: 0;
+    overflow: hidden;
     position: relative;
+  }
+  #main-title {
+    position: static; top: auto; left: auto; transform: none;
+    order: 0; width: 100%; text-align: center; padding: 8px 0;
   }
   #main-title h1 {
     font-size: 24px;
@@ -154,6 +157,7 @@ body {
     border-top: 3px solid var(--redwood);
     max-height: none;
     overflow-y: visible;
+    margin-top: 32px;
   }
   #detail-body {
     overflow-y: visible;
@@ -213,6 +217,10 @@ body {
     font-size: 10px;
     bottom: 6px;
   }
+
+  /* 药球缩小后字体适配 */
+  .herb-ball { font-size: 8px; }
+  .herb-ball:hover { font-size: 10px !important; }
 }
 
 /* ===== 中式装饰：页面外边框（红木色） ===== */
@@ -342,15 +350,6 @@ body::before {
 }
 #main-title .sub { font-size:13px; color:var(--text-light); letter-spacing:3px; margin-top:2px; }
 
-/* ========== 太极八卦 SVG ========== */
-#center-node {
-  position:absolute; z-index:4; cursor:default;
-  border-radius:50%; overflow:hidden;
-  transition:opacity 0.4s, transform 0.3s;
-  filter: drop-shadow(0 0 20px rgba(100,60,20,0.25)) drop-shadow(0 0 40px rgba(160,120,40,0.12));
-}
-#center-node:hover { transform:scale(1.06); }
-#taiji-svg { display:block; }
 
 /* ===== 五行大节点 ===== */
 .wx-node {
@@ -778,15 +777,14 @@ body::before {
     <div id="timeline"></div>
   </aside>
 
+  <div id="main-title">
+    <h1>五行香料药材知识库</h1>
+    <div class="sub">福建永春 · 香道文化</div>
+  </div>
+
   <main id="main">
     <svg id="svg-lines"></svg>
-    <div id="main-title">
-      <h1>五行香料药材知识库</h1>
-      <div class="sub">福建永春 · 香道文化</div>
-    </div>
 
-    <!-- 太极八卦 SVG 将由 JS 动态生成 -->
-    <div id="center-node"></div>
 
     <div id="herb-overlay">
       <div id="overlay-backdrop"></div>
@@ -1315,16 +1313,21 @@ function getHerbPosition(wxX, wxY, index, total) {
 
 function layoutAll() {
   const mainRect = mainEl.getBoundingClientRect();
-  const cx = mainRect.width / 2, cy = mainRect.height / 2;
-  centerNode.style.left = (cx - TAO_SIZE/2)+'px';
-  centerNode.style.top = (cy - TAO_SIZE/2)+'px';
-  centerNode.style.width = TAO_SIZE+'px';
-  centerNode.style.height = TAO_SIZE+'px';
+  const isMobile = window.innerWidth < 768;
+  const size = Math.min(mainRect.width, mainRect.height);
+  const cx = size / 2;
+  const cy = isMobile ? mainRect.height * 0.6 : size / 2;
+  if (centerNode) {
+    centerNode.style.left = (cx - TAO_SIZE/2)+'px';
+    centerNode.style.top = (cy - TAO_SIZE/2)+'px';
+    centerNode.style.width = TAO_SIZE+'px';
+    centerNode.style.height = TAO_SIZE+'px';
+  }
   const layouts = [];
   elements.forEach((key,i)=>{
     const wxPos = getWxPosition(i, cx, cy);
     const wxData = wuxingData[key];
-    const herbs = wxData.herbs;
+    const herbs = (window.innerWidth < 768) ? wxData.herbs.slice(0, 4) : wxData.herbs;
     const herbPositions = herbs.map((_,hi)=>getHerbPosition(wxPos.x, wxPos.y, hi, herbs.length));
     layouts.push({ key, data:wxData, wxPos, herbPositions, herbs });
   });
@@ -1332,7 +1335,7 @@ function layoutAll() {
 }
 
 // ==================== 渲染太极八卦 ====================
-centerNode.innerHTML = createTaijiSVG(TAO_SIZE);
+if (centerNode) centerNode.innerHTML = createTaijiSVG(TAO_SIZE);
 
 // ==================== 渲染节点和连线 ====================
 let herbBallRefs = [];
@@ -1583,12 +1586,11 @@ mainEl.addEventListener('click',()=>{
 // ==================== 移动端自适应 ====================
 function adjustMobileLayout() {
   if (window.innerWidth < 768) {
-    const baseScale = window.innerWidth / 740;
-    const scale = Math.min(baseScale, 0.62);
+    const scale = window.innerWidth / 950;
     WX_RADIUS = Math.round(220 * scale);
-    HERB_ORBIT = Math.round(115 * scale);
+    HERB_ORBIT = Math.round(150 * scale);
     WX_NODE_SIZE = Math.max(Math.round(76 * scale), 42);
-    HERB_SIZE = Math.max(Math.round(40 * scale), 24);
+    HERB_SIZE = Math.max(Math.round(44 * scale), 18);
     TAO_SIZE = Math.round(200 * scale);
   } else {
     WX_RADIUS = 220;
@@ -1606,7 +1608,7 @@ window.addEventListener('resize',()=>{
   resizeTimeout = setTimeout(()=>{
     adjustMobileLayout();
     if (window.innerWidth < 768) {
-      mainEl.style.height = window.innerWidth + 'px';
+      mainEl.style.height = Math.round(window.innerWidth * 2.0) + 'px';
     } else {
       mainEl.style.height = '';
     }
@@ -1616,7 +1618,7 @@ window.addEventListener('resize',()=>{
 
 adjustMobileLayout();
 if (window.innerWidth < 768) {
-  mainEl.style.height = window.innerWidth + 'px';
+  mainEl.style.height = Math.round(window.innerWidth * 2.0) + 'px';
 }
 renderAll();
 
