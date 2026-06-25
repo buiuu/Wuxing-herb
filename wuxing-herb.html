@@ -46,6 +46,183 @@ body {
   position: relative;
 }
 
+/* ===== 移动端响应式布局 ===== */
+@media (max-width: 767px) {
+  body {
+    overflow-x: hidden;
+    overflow-y: auto;
+    height: auto;
+    min-height: 100vh;
+    width: 100%;
+    user-select: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+  body::before {
+    inset: 3px;
+    border-width: 2px;
+  }
+  .corner-ornament {
+    width: 28px; height: 28px;
+    opacity: 0.6;
+  }
+  .corner-tl { top: 6px; left: 6px; }
+  .corner-tr { top: 6px; right: 6px; }
+  .corner-bl { bottom: 6px; left: 6px; }
+  .corner-br { bottom: 6px; right: 6px; }
+  .fret-strip {
+    height: 4px; opacity: 0.35;
+  }
+  .fret-strip.top { top: 6px; left: 50px; right: 50px; }
+  .fret-strip.bottom { bottom: 6px; left: 50px; right: 50px; }
+
+  #app {
+    flex-direction: column;
+    height: auto;
+    width: 100%;
+    padding: 6px 0 20px;
+    gap: 0;
+  }
+
+  /* 五行图谱主区域 - 缩放适配小屏 */
+  #main {
+    order: 1;
+    width: 100%;
+    min-height: 360px;
+    margin-top: 0;
+    overflow: hidden;
+    position: relative;
+  }
+  #main-title {
+    position: static; top: auto; left: auto; transform: none;
+    order: 0; width: 100%; text-align: center; padding: 8px 0;
+  }
+  #main-title h1 {
+    font-size: 24px;
+    letter-spacing: 4px;
+  }
+  #main-title .sub {
+    font-size: 11px;
+    letter-spacing: 2px;
+  }
+
+  /* 药材覆盖层 - 移动端适配 */
+  #herb-overlay {
+    overflow: hidden;
+  }
+  #overlay-detail {
+    width: 52%;
+    max-width: 52%;
+    right: 0;
+    padding: 40px 14px 30px 10px;
+    justify-content: flex-start;
+  }
+  #overlay-detail .od-label {
+    font-size: 20px;
+    letter-spacing: 2px;
+    margin-bottom: 4px;
+    padding-bottom: 4px;
+  }
+  #overlay-detail .od-text {
+    font-size: 25px;
+    line-height: 1.65;
+  }
+  #overlay-big-circle .herb-name-big {
+    font-size: 44px;
+    letter-spacing: 4px;
+  }
+  #overlay-big-circle .herb-element {
+    font-size: 26px;
+    letter-spacing: 2px;
+  }
+  #overlay-close {
+    top: 12px;
+    right: 16px;
+    width: 32px;
+    height: 32px;
+    font-size: 14px;
+  }
+  #overlay-hint {
+    bottom: 12px;
+    left: 14px;
+    font-size: 20px;
+  }
+
+  /* 右侧面板 - 香料搭配 + 诊断 */
+  #detail-panel {
+    order: 2;
+    width: 100%;
+    min-width: 0;
+    flex: none;
+    border-left: none;
+    border-top: 3px solid var(--redwood);
+    max-height: none;
+    overflow-y: visible;
+    margin-top: 32px;
+  }
+  #detail-body {
+    overflow-y: visible;
+  }
+  #detail-placeholder {
+    overflow-y: visible;
+  }
+
+  /* 侧边栏 - 修习日志 */
+  #sidebar {
+    order: 3;
+    width: 100%;
+    min-width: 0;
+    flex: none;
+    border-right: none;
+    border-top: 3px solid var(--redwood);
+    max-height: none;
+  }
+  #timeline {
+    max-height: none;
+    overflow-y: visible;
+    border-left: none;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  .timeline-entry {
+    margin-left: 0;
+    padding-left: 0;
+    border-left: none;
+    text-align: center;
+  }
+  .timeline-entry::before {
+    display: none;
+  }
+  #sidebar-header h2 {
+    font-size: 16px;
+    letter-spacing: 3px;
+  }
+
+  /* 诊断弹窗 - 移动端适配 */
+  #diagnosis-overlay .do-panel {
+    width: 92vw;
+    max-width: 92vw;
+    max-height: 85vh;
+    padding: 20px 16px 16px;
+  }
+  #diagnosis-overlay .do-title {
+    font-size: 17px;
+    letter-spacing: 2px;
+  }
+  #diagnosis-overlay .do-analysis {
+    font-size: 12px;
+  }
+
+  #footer-info {
+    font-size: 10px;
+    bottom: 6px;
+  }
+
+  /* 药球缩小后字体适配 */
+  .herb-ball { font-size: 8px; }
+  .herb-ball:hover { font-size: 10px !important; }
+}
+
 /* ===== 中式装饰：页面外边框（红木色） ===== */
 body::before {
   content: '';
@@ -173,15 +350,6 @@ body::before {
 }
 #main-title .sub { font-size:13px; color:var(--text-light); letter-spacing:3px; margin-top:2px; }
 
-/* ========== 太极八卦 SVG ========== */
-#center-node {
-  position:absolute; z-index:4; cursor:default;
-  border-radius:50%; overflow:hidden;
-  transition:opacity 0.4s, transform 0.3s;
-  filter: drop-shadow(0 0 20px rgba(100,60,20,0.25)) drop-shadow(0 0 40px rgba(160,120,40,0.12));
-}
-#center-node:hover { transform:scale(1.06); }
-#taiji-svg { display:block; }
 
 /* ===== 五行大节点 ===== */
 .wx-node {
@@ -495,14 +663,14 @@ body::before {
   font-size:12px; color:rgba(255,255,255,0.5); letter-spacing:2px;
 }
 
-/* ===== 响应式 ===== */
-@media (max-width:1200px) {
+/* ===== 响应式 - 桌面端中间档位 ===== */
+@media (max-width:1200px) and (min-width:768px) {
   #sidebar{width:220px;min-width:220px}
   #detail-panel{width:300px;min-width:300px}
   #overlay-detail{width:44%;padding:50px 20px 30px 16px}
 }
-@media (max-width:900px) {
-  #sidebar{display:none}
+@media (max-width:899px) and (min-width:768px) {
+  #sidebar{width:200px;min-width:200px}
   #detail-panel{width:260px;min-width:260px}
   #overlay-detail{width:46%}
 }
@@ -609,15 +777,14 @@ body::before {
     <div id="timeline"></div>
   </aside>
 
+  <div id="main-title">
+    <h1>五行香料药材知识库</h1>
+    <div class="sub">福建永春 · 香道文化</div>
+  </div>
+
   <main id="main">
     <svg id="svg-lines"></svg>
-    <div id="main-title">
-      <h1>五行香料药材知识库</h1>
-      <div class="sub">福建永春 · 香道文化</div>
-    </div>
 
-    <!-- 太极八卦 SVG 将由 JS 动态生成 -->
-    <div id="center-node"></div>
 
     <div id="herb-overlay">
       <div id="overlay-backdrop"></div>
@@ -1124,11 +1291,11 @@ const diagRuo = document.getElementById('diag-ruo');
 const diagBtn = document.getElementById('diagnosis-btn');
 
 // ==================== 布局常量 ====================
-const WX_RADIUS = 220;
-const HERB_ORBIT = 115;
-const WX_NODE_SIZE = 76;
-const HERB_SIZE = 40;
-const TAO_SIZE = 200;
+let WX_RADIUS = 220;
+let HERB_ORBIT = 115;
+let WX_NODE_SIZE = 76;
+let HERB_SIZE = 40;
+let TAO_SIZE = 200;
 const elements = ['huo','tu','jin','shui','mu'];
 
 // ==================== 布局计算 ====================
@@ -1146,16 +1313,21 @@ function getHerbPosition(wxX, wxY, index, total) {
 
 function layoutAll() {
   const mainRect = mainEl.getBoundingClientRect();
-  const cx = mainRect.width/2, cy = mainRect.height/2;
-  centerNode.style.left = (cx - TAO_SIZE/2)+'px';
-  centerNode.style.top = (cy - TAO_SIZE/2)+'px';
-  centerNode.style.width = TAO_SIZE+'px';
-  centerNode.style.height = TAO_SIZE+'px';
+  const isMobile = window.innerWidth < 768;
+  const size = Math.min(mainRect.width, mainRect.height);
+  const cx = size / 2;
+  const cy = isMobile ? mainRect.height * 0.6 : size / 2;
+  if (centerNode) {
+    centerNode.style.left = (cx - TAO_SIZE/2)+'px';
+    centerNode.style.top = (cy - TAO_SIZE/2)+'px';
+    centerNode.style.width = TAO_SIZE+'px';
+    centerNode.style.height = TAO_SIZE+'px';
+  }
   const layouts = [];
   elements.forEach((key,i)=>{
     const wxPos = getWxPosition(i, cx, cy);
     const wxData = wuxingData[key];
-    const herbs = wxData.herbs;
+    const herbs = (window.innerWidth < 768) ? wxData.herbs.slice(0, 4) : wxData.herbs;
     const herbPositions = herbs.map((_,hi)=>getHerbPosition(wxPos.x, wxPos.y, hi, herbs.length));
     layouts.push({ key, data:wxData, wxPos, herbPositions, herbs });
   });
@@ -1163,7 +1335,7 @@ function layoutAll() {
 }
 
 // ==================== 渲染太极八卦 ====================
-centerNode.innerHTML = createTaijiSVG(TAO_SIZE);
+if (centerNode) centerNode.innerHTML = createTaijiSVG(TAO_SIZE);
 
 // ==================== 渲染节点和连线 ====================
 let herbBallRefs = [];
@@ -1411,19 +1583,49 @@ mainEl.addEventListener('click',()=>{
   detailName.textContent = '香料搭配推荐';
 });
 
+// ==================== 移动端自适应 ====================
+function adjustMobileLayout() {
+  if (window.innerWidth < 768) {
+    const scale = window.innerWidth / 950;
+    WX_RADIUS = Math.round(220 * scale);
+    HERB_ORBIT = Math.round(150 * scale);
+    WX_NODE_SIZE = Math.max(Math.round(76 * scale), 42);
+    HERB_SIZE = Math.max(Math.round(44 * scale), 18);
+    TAO_SIZE = Math.round(200 * scale);
+  } else {
+    WX_RADIUS = 220;
+    HERB_ORBIT = 115;
+    WX_NODE_SIZE = 76;
+    HERB_SIZE = 40;
+    TAO_SIZE = 200;
+  }
+}
+
 // ==================== 窗口调整 ====================
 let resizeTimeout;
 window.addEventListener('resize',()=>{
   clearTimeout(resizeTimeout);
-  resizeTimeout = setTimeout(renderAll, 150);
+  resizeTimeout = setTimeout(()=>{
+    adjustMobileLayout();
+    if (window.innerWidth < 768) {
+      mainEl.style.height = Math.round(window.innerWidth * 2.0) + 'px';
+    } else {
+      mainEl.style.height = '';
+    }
+    renderAll();
+  }, 150);
 });
 
+adjustMobileLayout();
+if (window.innerWidth < 768) {
+  mainEl.style.height = Math.round(window.innerWidth * 2.0) + 'px';
+}
 renderAll();
 
-setTimeout(()=>{
-  const firstBall = mainEl.querySelector('.herb-ball');
-  if(firstBall) firstBall.click();
-}, 600);
+  setTimeout(()=>{
+    const firstBall = mainEl.querySelector('.herb-ball');
+    if(firstBall) firstBall.click();
+  }, 600);
 
 </script>
 
