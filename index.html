@@ -353,7 +353,7 @@ body::before {
 
 /* ===== 五行大节点 ===== */
 .wx-node {
-  position:absolute; width:76px; height:76px; border-radius:50%;
+  position:absolute; width:56px; height:56px; border-radius:50%;
   z-index:3; cursor:pointer;
   display:flex; flex-direction:column; align-items:center; justify-content:center;
   transition:opacity 0.4s, transform 0.4s cubic-bezier(0.175,0.885,0.32,1.275);
@@ -378,10 +378,10 @@ body::before {
 
 /* ===== 药材小球 ===== */
 .herb-ball {
-  position:absolute; width:40px; height:40px; border-radius:50%;
+  position:absolute; width:26px; height:26px; border-radius:50%;
   z-index:2; cursor:pointer;
   display:flex; align-items:center; justify-content:center;
-  font-size:11px; font-weight:500; letter-spacing:1px;
+  font-size:7px; font-weight:500; letter-spacing:1px;
   transition:transform 0.35s cubic-bezier(0.175,0.885,0.32,1.275), box-shadow 0.35s, font-size 0.35s, opacity 0.4s;
   animation:float-herb 3s ease-in-out infinite;
   white-space:nowrap; color:#3d2b1f;
@@ -1293,8 +1293,8 @@ const diagBtn = document.getElementById('diagnosis-btn');
 // ==================== 布局常量 ====================
 let WX_RADIUS = 220;
 let HERB_ORBIT = 115;
-let WX_NODE_SIZE = 76;
-let HERB_SIZE = 40;
+let WX_NODE_SIZE = 56;
+let HERB_SIZE = 26;
 let TAO_SIZE = 200;
 const elements = ['huo','tu','jin','shui','mu'];
 
