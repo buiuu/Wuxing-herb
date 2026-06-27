@@ -1316,7 +1316,7 @@ function layoutAll() {
   const isMobile = window.innerWidth < 768;
   const size = Math.min(mainRect.width, mainRect.height);
   const cx = size / 2;
-  const cy = isMobile ? 180 : size / 2;
+  const cy = isMobile ? 90 : size / 2;
   if (centerNode) {
     centerNode.style.left = (cx - TAO_SIZE/2)+'px';
     centerNode.style.top = (cy - TAO_SIZE/2)+'px';
